@@ -1,34 +1,34 @@
-import React, { useState } from 'react';
-
-import reactLogo from '/react.svg';
-import viteLogo from '/vite.svg';
-import tsLogo from '/ts.svg';
-import './main-page.css';
+import { useState } from 'react';
+import { Layout } from 'antd';
+import Sider from 'antd/lib/layout/Sider';
+import { Header } from '@components/Header';
+import { NavigationDesktop } from '@components/NavigationDesktop';
+import { Main } from '@components/Main';
+import './main-page.scss';
+import { NavigationMobile } from '@components/NavigationMobile';
 
 export const MainPage: React.FC = () => {
-    const [count, setCount] = useState(0);
-
+    const [collapsed, setCollapsed] = useState(false);
     return (
-        <>
-            <div>
-                <a href='https://vitejs.dev' target='_blank'>
-                    <img src={viteLogo} className='logo' alt='Vite logo' />
-                </a>
-                <a href='https://react.dev' target='_blank'>
-                    <img src={reactLogo} className='logo react' alt='React logo' />
-                </a>
-                <a href='https://www.typescriptlang.org/' target='_blank'>
-                    <img src={tsLogo} className='logo' alt='TS logo' />
-                </a>
-            </div>
-            <h1>Vite + React + TS</h1>
-            <div className='card'>
-                <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-                <p>
-                    Edit <code>src/pages/main-page.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className='read-the-docs'>Click on the Vite and React logos to learn more</p>
-        </>
+        <Layout hasSider>
+            <Sider className='desktop-sider' collapsible trigger={null} theme='light' collapsed={collapsed} width={208} collapsedWidth={64}>
+                <NavigationDesktop collapsed={collapsed} setCollapsed={setCollapsed} />
+            </Sider>
+            <Sider
+                style={{
+                    height: '100vh',
+                    position: 'fixed',
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+                className='mobile-sider' collapsible trigger={null} theme='light' collapsed={collapsed} width={106} collapsedWidth={0}>
+                <NavigationMobile collapsed={collapsed} setCollapsed={setCollapsed} />
+            </Sider>
+            <Layout className='main'>
+                <Header />
+                <Main />
+            </Layout>
+        </Layout>
     );
 };

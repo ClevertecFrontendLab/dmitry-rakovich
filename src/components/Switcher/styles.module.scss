@@ -1,0 +1,18 @@
+.switcher {
+    position: absolute;
+    right: -22px;
+    top: 50%;
+    background: #fff;
+    height: 66px;
+    width: 22px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    clip-path: polygon(0 0, 0 100%, 100% 80%, 100% 20%);
+    cursor: pointer;
+    @media screen and (max-width: 768px) {
+        height: 48px;
+        width: 32px;
+        top: 24px;
+    }
+}

@@ -1,0 +1,79 @@
+@import './variables';
+
+*html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+img,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+article,
+aside,
+details,
+figure,
+figcaption,
+footer,
+header,
+nav,
+section,
+summary,
+audio,
+video {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Inter, sans-serif;
+    color: $character-light-primary;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    // overflow: hidden;
+}
+
+#root {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.ant-layout {
+    height: 100%;
+}
+
+.ant-layout-sider {
+    height: 100vh;
+    position: sticky;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.ant-layout-sider-collapsed {
+    & .logo img {
+        width: auto;
+        clip-path: inset(0 0 0 100px);
+        margin-left: -100px;
+    }
+    & .menu_text {
+        display: none;
+    }
+    & .menu_item {
+        justify-content: center;
+    }
+}

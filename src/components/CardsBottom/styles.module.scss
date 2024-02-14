@@ -1,0 +1,61 @@
+@import '../../styles/variables';
+
+.wrapper {
+    width: 100%;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-self: flex-end;
+    align-items: end;
+    margin-top: 155px;
+    @media screen and (max-width: 768px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 24px;
+        margin-top: 240px;
+        padding: 0;
+    }
+    @media screen and (max-width: 480px) {
+        margin-top: 24px;
+    }
+}
+
+.link {
+    color: $primary-light-6;
+}
+
+.hint {
+    color: $character-light-secondary;
+}
+
+.card {
+    background-color: $neutral-gray-1;
+    width: 240px;
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
+
+.top {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px 24px;
+    gap: 8px;
+    @media screen and (max-width: 768px) {
+        align-items: center;
+    }
+}
+
+.bottom {
+    display: flex;
+    padding: 12px 0;
+    border-top: $character-light-dividers;
+    & .store {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+    }
+}

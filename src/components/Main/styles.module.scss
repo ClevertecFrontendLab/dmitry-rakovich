@@ -1,0 +1,20 @@
+.main {
+    background-image: url('../../assets/Main\ page_bg.png');
+    background-position: center;
+    background-size: cover;
+    min-height: 100%;
+    padding: 24px 24px 42px;
+    display: grid;
+    display: flex;
+    flex-direction: column;
+}
+
+.cards {
+    display: flex;
+    gap: 16px;
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+}

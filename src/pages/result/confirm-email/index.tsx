@@ -40,7 +40,7 @@ export const ConfirmEmail: React.FC = () => {
     }
     return (
         <AuthWrapper>
-            {isLoading && <Loader />}
+            <Loader className={isLoading ? 'visible' : ''} />
             <div className={styles.form}>
                 {
                     !error

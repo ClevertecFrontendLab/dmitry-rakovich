@@ -51,7 +51,7 @@ export const ChangePassword: React.FC = () => {
 
     return (
         <AuthWrapper>
-            {isLoading && <Loader />}
+            <Loader className={isLoading ? 'visible' : ''} />
             <Form
                 form={form}
                 layout="vertical"

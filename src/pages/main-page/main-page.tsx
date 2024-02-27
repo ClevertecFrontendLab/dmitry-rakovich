@@ -24,7 +24,7 @@ export const MainPage: React.FC = () => {
     }, [user])
     return (
         <Layout hasSider>
-            {isLoading && <Loader />}
+            <Loader className={isLoading ? 'visible' : ''} />
             <Sider className='desktop-sider' collapsible trigger={null} theme='light' collapsed={collapsed} width={208} collapsedWidth={64}>
                 <NavigationDesktop collapsed={collapsed} setCollapsed={setCollapsed} />
             </Sider>

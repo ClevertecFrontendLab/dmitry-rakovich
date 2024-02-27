@@ -22,8 +22,6 @@ export const ErrorUserExist: React.FC = () => {
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        console.log(history);
-
         if (history.state.usr) {
             if (history.state.usr.from === ROUTES.auth.registration) {
                 return

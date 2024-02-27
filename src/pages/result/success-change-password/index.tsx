@@ -8,10 +8,11 @@ import { Button } from "antd"
 import { push } from "redux-first-history"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { useEffect } from "react"
+import { userSelector } from "@redux/selectors"
 
 export const SuccessChangePassword: React.FC = () => {
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector(state => state.user)
+    const user = useAppSelector(userSelector)
 
     const navigateTo = () => {
         dispatch(push(ROUTES.auth.main))

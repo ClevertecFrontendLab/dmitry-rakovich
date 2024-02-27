@@ -11,14 +11,15 @@ import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { push } from "redux-first-history"
 import { Loader } from "@components/Loader/Loader"
+import { authDataSelector, userSelector } from "@redux/selectors"
 
 export const ConfirmEmail: React.FC = () => {
     const [value, setValue] = useState('')
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useAppDispatch()
-    const { email } = useAppSelector(state => state.user.authData)
-    const user = useAppSelector(state => state.user.user)
+    const { email } = useAppSelector(authDataSelector)
+    const user = useAppSelector(userSelector)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))

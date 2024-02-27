@@ -8,9 +8,10 @@ import '../icons.scss'
 import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
 import { push } from "redux-first-history"
 import { useEffect } from "react"
+import { userSelector } from "@redux/selectors"
 
 export const ErrorChangePassword: React.FC = () => {
-    const { user } = useAppSelector(state => state.user)
+    const user = useAppSelector(userSelector)
 
     const dispatch = useAppDispatch()
     const navigateTo = () => {

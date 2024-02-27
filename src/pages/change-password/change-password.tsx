@@ -11,6 +11,7 @@ import { push } from "redux-first-history";
 import { setData } from "@redux/slices/user-slice";
 import { Loader } from "@components/Loader/Loader";
 import { STATUS } from "@constants/status";
+import { authDataSelector, userSelector } from "@redux/selectors";
 
 
 export const ChangePassword: React.FC = () => {
@@ -18,8 +19,8 @@ export const ChangePassword: React.FC = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
-    const user = useAppSelector(state => state.user.user)
-    const authData = useAppSelector(state => state.user.authData)
+    const user = useAppSelector(userSelector)
+    const authData = useAppSelector(authDataSelector)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))

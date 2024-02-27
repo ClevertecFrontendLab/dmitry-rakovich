@@ -8,9 +8,10 @@ import styles from '../styles.module.scss'
 import '../icons.scss'
 import { AuthWrapper } from "@components/AuthWrapper"
 import { Button } from "antd"
+import { userSelector } from "@redux/selectors"
 
 export const ErrorCheckEmail: React.FC = () => {
-    const { user } = useAppSelector(state => state.user)
+    const user  = useAppSelector(userSelector)
 
     const dispatch = useAppDispatch()
     const navigateTo = () => {

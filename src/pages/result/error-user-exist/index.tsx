@@ -8,9 +8,10 @@ import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
 import { Button } from "antd"
 import { useEffect } from "react"
 import { push } from "redux-first-history"
+import { userSelector } from "@redux/selectors"
 
 export const ErrorUserExist: React.FC = () => {
-    const { user } = useAppSelector(state => state.user)
+    const user = useAppSelector(userSelector)
 
     const dispatch = useAppDispatch()
     const navigateTo = () => {

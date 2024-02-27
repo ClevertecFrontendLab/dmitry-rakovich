@@ -10,11 +10,12 @@ import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { push } from 'redux-first-history';
 import { ROUTES } from '@constants/routes';
 import { Loader } from '@components/Loader/Loader';
+import { userSelector } from '@redux/selectors';
 
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const user = useAppSelector(state => state.user.user)
+    const user = useAppSelector(userSelector)
     const dispatch = useAppDispatch()
 
     useEffect(() => {

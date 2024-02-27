@@ -8,10 +8,11 @@ import { AuthWrapper } from "@components/AuthWrapper";
 import { Button } from "antd";
 import styles from '../styles.module.scss'
 import '../icons.scss'
+import { userSelector } from "@redux/selectors";
 
 export const ErrorOther: React.FC = () => {
     const dispatch = useAppDispatch()
-    const { user } = useAppSelector(state => state.user)
+    const user  = useAppSelector(userSelector)
 
     const navigateTo = () => {
         dispatch(push(ROUTES.auth.registration, {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { HistoryRouter as Router } from "redux-first-history/rr6";
 
 import { history, store } from '@redux/configure-store';
@@ -33,6 +33,7 @@ root.render(
         <Provider store={store}>
             <Router history={history}>
                 <Routes>
+                    <Route path={'/'} element={<Navigate to={ROUTES.main} />} />
                     <Route path={ROUTES.main} element={<MainPage />} />
                     <Route path={ROUTES.auth.main} element={<AuthPage />} />
                     <Route path={ROUTES.auth.registration} element={<RegisterPage />} />

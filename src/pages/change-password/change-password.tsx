@@ -19,18 +19,20 @@ export const ChangePassword: React.FC = () => {
     const dispatch = useAppDispatch()
     const user = useAppSelector(state => state.user.user)
     const authData = useAppSelector(state => state.user.authData)
-    const { previousLocations } = useAppSelector(state => state.router)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     useEffect(() => {
-
-        console.log(previousLocations);
-
         if (user) dispatch(push(ROUTES.main))
-        if (pathname !== 'success_confirm_email') {
-            dispatch(push(ROUTES.auth.main))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.confirm_email) {
+                return
+            }
+            if (history.state.usr.from === ROUTES.result.error.change_password) {
+                sendPassword()
+            }
         }
-    }, [user, authData])
+        dispatch(push(ROUTES.auth.main))
+
+    }, [user])
 
     const validateForm = () => {
         const { password, confirmPassword } = form.getFieldsValue(['password', 'confirmPassword'])
@@ -48,24 +50,21 @@ export const ChangePassword: React.FC = () => {
                 password: authData.password || form.getFieldValue('password'),
                 confirmPassword: authData.confirmPassword || form.getFieldValue('confirmPassword')
             })
-            if (response.status === 200) {
-                dispatch(setData({ pathname: 'success_change_password' }))
-                dispatch(push(ROUTES.result.success_change_password))
+            if (response.status === 201) {
+                dispatch(push(ROUTES.result.success_change_password, {
+                    from: ROUTES.auth.change_password
+                }))
             }
         } catch (error) {
-            dispatch(setData({ pathname: 'error-change-password' }))
-            dispatch(push(ROUTES.result.error.change_password))
+            dispatch(setData({
+                password: authData.password || form.getFieldValue('password'),
+                confirmPassword: authData.confirmPassword || form.getFieldValue('confirmPassword')
+            }))
+            dispatch(push(ROUTES.result.error.change_password, {
+                from: ROUTES.auth.change_password
+            }))
         }
         setIsLoading(false)
-    }
-
-    const sendNewPassword = async () => {
-        if (isFormValid) {
-            sendPassword()
-        }
-        else {
-            form.validateFields()
-        }
     }
 
     return (
@@ -86,7 +85,7 @@ export const ChangePassword: React.FC = () => {
                         name="password"
                         className={styles.form_item}
                         rules={[rules.password]}
-                        help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
+                        help="Пароль должен содержать как минимум 1 цифру, 1 латинскую строчную и одну заглавную букву."
                     >
                         <Input.Password
                             data-test-id='change-password'
@@ -128,8 +127,9 @@ export const ChangePassword: React.FC = () => {
                         type="primary"
                         className={`${styles.button} ${styles.save}`}
                         size="large"
-                        onClick={sendNewPassword}
+                        onClick={sendPassword}
                         data-test-id='change-submit-button'
+                        disabled={!isFormValid}
                     >
                         Сохранить
                     </Button>

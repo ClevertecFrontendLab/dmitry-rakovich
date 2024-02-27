@@ -5,9 +5,9 @@ import { Button, Checkbox, Form, Input } from "antd"
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import logo from '../../assets/logo.svg'
-import styles from './styles.module.scss'
+import styles from '../auth.module.scss'
 import { AuthWrapper } from "@components/AuthWrapper"
-import { routes } from "@constants/api"
+import { api } from "@constants/api"
 import { ROUTES } from "@constants/routes"
 import { push } from "redux-first-history"
 import $api from "../../axios"
@@ -15,9 +15,10 @@ import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { setData, signIn } from "@redux/slices/user-slice"
 import { Loader } from "@components/Loader/Loader"
 
+
 export const AuthPage: React.FC = () => {
     const { pathname } = useLocation();
-    const [disabled, setDisabled] = useState<boolean>(true)
+    const [disabled, setDisabled] = useState<boolean>(false)
     const [isFormValid, setIsFormValid] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [form] = Form.useForm();
@@ -25,15 +26,19 @@ export const AuthPage: React.FC = () => {
     const user = useAppSelector(state => state.user.user)
     const authData = useAppSelector(state => state.user.authData)
 
-
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (authData.pathname === "error_check_email") {
-            resetPassword()
+
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.result.error.check_email) {
+                sendPassword()
+            }
         }
     }, [user])
 
     const validateForm = () => {
+        console.log(isFormValid);
+
         const { email, password } = form.getFieldsValue(['email', 'password'])
         if (email.match(regex.email)) {
             setDisabled(false);
@@ -51,7 +56,7 @@ export const AuthPage: React.FC = () => {
         if (isFormValid) {
             setIsLoading(true)
             try {
-                const response = await $api.post(routes.auth.login, {
+                const response = await $api.post(api.auth.login, {
                     email: form.getFieldValue('email'),
                     password: form.getFieldValue('password')
                 })
@@ -63,10 +68,9 @@ export const AuthPage: React.FC = () => {
                     dispatch(push(ROUTES.main));
                 }
             } catch (error) {
-                dispatch(setData({
-                    pathname: 'auth'
-                }))
-                dispatch(push(ROUTES.result.error.login));
+                dispatch(push(ROUTES.result.error.login, {
+                    from: ROUTES.auth.main
+                }));
             }
             setIsLoading(false)
         } else {
@@ -74,30 +78,67 @@ export const AuthPage: React.FC = () => {
         }
     };
 
-    const resetPassword = async () => {
+    const sendPassword = async () => {
         setIsLoading(true)
         try {
-            const response = await $api.post(routes.auth.check_email, {
+            const response = await $api.post(api.auth.check_email, {
                 email: authData.email || form.getFieldValue('email')
             })
-            if (response.status === 200) {
-                dispatch(setData({ email: form.getFieldValue('email'), pathname: 'check-email' }))
-                dispatch(push(ROUTES.auth.confirm_email))
+            if (response) {
+                console.log('response', response);
+
+                dispatch(setData({ email: form.getFieldValue('email') }))
+                dispatch(push(ROUTES.auth.confirm_email, {
+                    from: ROUTES.auth.main
+                }))
                 return
             }
         } catch (error) {
-            if (error.response.data.statusCode === 404 && error.response.data.message === 'Email не найден') {
-                dispatch(setData({ pathname: 'check-email' }))
-                dispatch(push(ROUTES.result.error.check_email_no_exist));
-                return
+            console.log('error', error);
+
+            if (error.response.status === 404) {
+                if (error.response.data.message === 'Email не найден') {
+                    dispatch(push(ROUTES.result.error.check_email_no_exist, {
+                        from: ROUTES.auth.main
+                    }));
+                    return
+                } else {
+                    dispatch(
+                        setData({
+                            email: authData.email || form.getFieldValue('email')
+                        })
+                    )
+                    dispatch(
+                        push(ROUTES.result.error.check_email, {
+                            from: '/auth'
+                        })
+                    )
+                    return
+                }
+            } else {
+                dispatch(
+                    setData({
+                        email: authData.email || form.getFieldValue('email')
+                    })
+                )
+                dispatch(
+                    push(ROUTES.result.error.check_email, {
+                        from: '/auth'
+                    })
+                )
             }
-            dispatch(setData({
-                pathname: 'error_check_email',
-                email: form.getFieldValue('email')
-            }))
-            dispatch(push(ROUTES.result.error.check_email));
         }
         setIsLoading(false)
+    }
+
+    const resetPassword = async () => {
+        const email = form.getFieldValue('email')
+        if (!email.match(regex.email)) {
+            setDisabled(disabled)
+            return
+        } else {
+            sendPassword()
+        }
     }
 
     return (

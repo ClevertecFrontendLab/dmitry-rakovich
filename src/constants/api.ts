@@ -1,6 +1,6 @@
 export const BASE_URL = 'https://marathon-api.clevertec.ru'
 
-export const routes = {
+export const api = {
     auth: {
         google: `${BASE_URL}/auth/google`,
         login: `${BASE_URL}/auth/login`,

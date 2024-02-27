@@ -12,22 +12,21 @@ import { useEffect } from "react"
 export const SuccessChangePassword: React.FC = () => {
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
-    const { previousLocations } = useAppSelector(state => state.router)
 
     const goTo = () => {
         dispatch(push(ROUTES.auth.main))
     }
 
     useEffect(() => {
-        console.log(previousLocations);
-
         if (user) dispatch(push(ROUTES.main))
-        if (pathname !== 'success_change_password') {
-            dispatch(push(ROUTES.auth.main))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.change_password) {
+                return
+            }
         }
+        dispatch(push(ROUTES.auth.main))
 
-    }, [user, pathname])
+    }, [user])
     return (
         <AuthWrapper>
             <div className={styles.form}>

@@ -5,29 +5,31 @@ import styles from '../styles.module.scss'
 import '../icons.scss'
 import { AuthWrapper } from "@components/AuthWrapper"
 import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
-import { setData } from "@redux/slices/user-slice"
 import { Button } from "antd"
 import { useEffect } from "react"
 import { push } from "redux-first-history"
 
 export const ErrorUserExist: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     const dispatch = useAppDispatch()
     const goTo = () => {
-        dispatch(push(ROUTES.auth.registration))
+        dispatch(push(ROUTES.auth.registration, {
+            from: ROUTES.result.error.user_exist
+        }))
     }
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'register') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        return () => {
-            dispatch(setData({}))
+        console.log(history);
+
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.registration) {
+                return
+            }
         }
-    }, [user, pathname])
+        dispatch(push(ROUTES.auth.registration));
+    }, [user])
     return (
         <AuthWrapper>
             <div className={styles.form}>

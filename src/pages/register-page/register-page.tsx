@@ -5,8 +5,8 @@ import { Button, Form, Input } from "antd"
 import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import logo from '../../assets/logo.svg'
-import styles from './styles.module.scss'
-import { routes } from "@constants/api"
+import styles from '../auth.module.scss'
+import { api } from "@constants/api"
 import $api from "../../axios"
 import { push } from "redux-first-history";
 import { ROUTES } from "@constants/routes"
@@ -26,10 +26,12 @@ export const RegisterPage: React.FC = () => {
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (authData.pathname === "register_error") {
-            register()
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.result.error.other)
+                register()
         }
-    }, [user, authData])
+
+    }, [user])
 
     const validateForm = () => {
         const { email, password, confirmPassword } = form.getFieldsValue(['email', 'password', 'confirmPassword'])
@@ -43,31 +45,29 @@ export const RegisterPage: React.FC = () => {
     const register = async () => {
         setIsLoading(true)
         try {
-            const response = await $api.post(routes.auth.registration, {
-                email: form.getFieldValue('email'),
-                password: form.getFieldValue('password')
+            const response = await $api.post(api.auth.registration, {
+                email: authData.email || form.getFieldValue('email'),
+                password: authData.password || form.getFieldValue('password')
             })
             if (response.status === 201) {
-                dispatch(push(ROUTES.result.success));
-                dispatch(setData({
-                    pathname: 'register'
-                }))
+                dispatch(push(ROUTES.result.success, {
+                    from: ROUTES.auth.registration
+                }));
             }
         } catch (error) {
-            console.log(error);
             if (error.response.status === 409) {
-                dispatch(setData({
-                    pathname: 'register'
-                }))
-                dispatch(push(ROUTES.result.error.user_exist));
+                dispatch(push(ROUTES.result.error.user_exist, {
+                    from: ROUTES.auth.registration
+                }));
                 return
             }
             dispatch(setData({
-                pathname: 'register_error',
                 email: authData.email || form.getFieldValue('email'),
                 password: authData.password || form.getFieldValue('password')
             }))
-            dispatch(push(ROUTES.result.error.other))
+            dispatch(push(ROUTES.result.error.other, {
+                from: ROUTES.auth.registration
+            }))
         }
         setIsLoading(false)
     }
@@ -164,6 +164,7 @@ export const RegisterPage: React.FC = () => {
                             size="large"
                             data-test-id='registration-submit-button'
                             onClick={sendForm}
+                            disabled={!isFormValid}
                         >
                             Регистрация
                         </Button>

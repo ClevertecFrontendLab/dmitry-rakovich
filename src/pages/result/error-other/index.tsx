@@ -1,11 +1,9 @@
 import { CloseCircleFilled } from "@ant-design/icons"
 import { ROUTES } from "@constants/routes"
-import { Result } from ".."
 import { result } from "@constants/resultPageData"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks";
 import { useEffect } from "react";
 import { push } from "redux-first-history";
-import { setData } from "@redux/slices/user-slice";
 import { AuthWrapper } from "@components/AuthWrapper";
 import { Button } from "antd";
 import styles from '../styles.module.scss'
@@ -13,27 +11,23 @@ import '../icons.scss'
 
 export const ErrorOther: React.FC = () => {
     const dispatch = useAppDispatch()
-    const authData = useAppSelector(state => state.user.authData)
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     const goTo = () => {
-        dispatch(push(ROUTES.auth.registration))
+        dispatch(push(ROUTES.auth.registration, {
+            from: ROUTES.result.error.other
+        }))
     }
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'register_error') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        return () => {
-            dispatch(setData({}))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.registration)
+                return
         }
-    }, [user, pathname])
+        dispatch(push(ROUTES.auth.main));
+    }, [user])
 
-    useEffect(() => {
-        if (!authData.pathname) dispatch(push(ROUTES.auth.main))
-    }, [authData])
     return (
         <AuthWrapper>
             <div className={styles.form}>

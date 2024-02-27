@@ -6,28 +6,26 @@ import { Button } from "antd"
 import styles from '../styles.module.scss'
 import '../icons.scss'
 import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
-import { setData } from "@redux/slices/user-slice"
 import { useEffect } from "react"
 import { push } from "redux-first-history"
 
 export const ErrorLogin: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     const dispatch = useAppDispatch()
     const goTo = () => {
-        dispatch(push(ROUTES.auth.registration))
+        dispatch(push(ROUTES.auth.main))
     }
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'auth') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        return () => {
-            dispatch(setData({}))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.main) {
+                return
+            }
         }
-    }, [user, pathname])
+        dispatch(push(ROUTES.auth.main));
+    }, [user])
     return (
         <AuthWrapper>
             <div className={styles.form}>

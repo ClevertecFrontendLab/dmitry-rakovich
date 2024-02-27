@@ -10,7 +10,6 @@ import { ROUTES } from "@constants/routes"
 import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { push } from "redux-first-history"
-import { setData } from "@redux/slices/user-slice"
 import { Loader } from "@components/Loader/Loader"
 
 export const ConfirmEmail: React.FC = () => {
@@ -18,18 +17,18 @@ export const ConfirmEmail: React.FC = () => {
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useAppDispatch()
-    const { email, pathname } = useAppSelector(state => state.user.authData)
+    const { email } = useAppSelector(state => state.user.authData)
     const user = useAppSelector(state => state.user.user)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'check-email') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        // return () => {
-        //     dispatch(setData({}))
-        // }
-    }, [user, pathname])
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.main) {
+                return
+            }
+        }
+        dispatch(push(ROUTES.auth.main));
+    }, [user])
 
     const confirmEmail = async (code: string) => {
         setIsLoading(true)
@@ -38,9 +37,10 @@ export const ConfirmEmail: React.FC = () => {
                 email,
                 code
             })
-            if (response.status === 200) {
-                dispatch(setData({ pathname: "success_confirm_email" }))
-                dispatch(push(ROUTES.auth.change_password))
+            if (response) {
+                dispatch(push(ROUTES.auth.change_password, {
+                    from: ROUTES.auth.confirm_email
+                }))
             }
         } catch (error) {
             setValue('')
@@ -70,12 +70,11 @@ export const ConfirmEmail: React.FC = () => {
                     </p>
                 </div>
                 <VerificationInput
-                    data-test-id='verification-input'
                     value={value}
                     onChange={(value) => setValue(value)}
                     onComplete={(value) => confirmEmail(value)}
                     validChars="0-9"
-                    inputProps={{ inputMode: "numeric" }}
+                    inputProps={{ inputMode: "numeric", 'data-test-id': 'verification-input' }}
                     classNames={{
                         container: "container",
                         character: `character ${error ? 'error' : ''}`,

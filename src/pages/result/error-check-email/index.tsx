@@ -2,7 +2,6 @@ import { result } from "@constants/resultPageData"
 import { ROUTES } from "@constants/routes"
 import { ErrorCheckEmailIcon } from "../../../assets/icons/ErrorCheckEmailIcon"
 import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
-import { setData } from "@redux/slices/user-slice"
 import { useEffect } from "react"
 import { push } from "redux-first-history"
 import styles from '../styles.module.scss'
@@ -12,22 +11,23 @@ import { Button } from "antd"
 
 export const ErrorCheckEmail: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     const dispatch = useAppDispatch()
     const goTo = () => {
-        dispatch(push(ROUTES.auth.main))
+        dispatch(push(ROUTES.auth.main, {
+            from: ROUTES.result.error.check_email
+        }))
     }
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'error_check_email') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        return () => {
-            dispatch(setData({}))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.main) {
+                return
+            }
         }
-    }, [user, pathname])
+        dispatch(push(ROUTES.auth.main))
+    }, [user])
     return (
         <AuthWrapper>
             <div className={styles.form}>

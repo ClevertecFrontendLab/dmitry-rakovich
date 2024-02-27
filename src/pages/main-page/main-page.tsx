@@ -9,17 +9,21 @@ import { NavigationMobile } from '@components/NavigationMobile';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { push } from 'redux-first-history';
 import { ROUTES } from '@constants/routes';
+import { Loader } from '@components/Loader/Loader';
 
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const user = useAppSelector(state => state.user.user)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (!user) dispatch(push(ROUTES.auth.main))
+        setIsLoading(false)
     }, [user])
     return (
         <Layout hasSider>
+            {isLoading && <Loader />}
             <Sider className='desktop-sider' collapsible trigger={null} theme='light' collapsed={collapsed} width={208} collapsedWidth={64}>
                 <NavigationDesktop collapsed={collapsed} setCollapsed={setCollapsed} />
             </Sider>

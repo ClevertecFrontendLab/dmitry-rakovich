@@ -7,26 +7,25 @@ import styles from '../styles.module.scss'
 import '../icons.scss'
 import { useAppSelector, useAppDispatch } from "@hooks/typed-react-redux-hooks"
 import { push } from "redux-first-history"
-import { setData } from "@redux/slices/user-slice"
 import { useEffect } from "react"
 
 export const ErrorChangePassword: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
-    const { pathname } = useAppSelector(state => state.user.authData)
 
     const dispatch = useAppDispatch()
     const goTo = () => {
-        dispatch(push(ROUTES.auth.change_password))
+        dispatch(push(ROUTES.auth.change_password, {
+            from: ROUTES.result.error.change_password
+        }))
     }
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
-        if (pathname === 'error-change-password') {
-            return
-        } else dispatch(push(ROUTES.auth.main));
-        return () => {
-            dispatch(setData({}))
+        if (history.state.usr) {
+            if (history.state.usr.from === ROUTES.auth.change_password)
+                return
         }
-    }, [user, pathname])
+        dispatch(push(ROUTES.auth.main));
+    }, [user])
     return (
         <AuthWrapper>
             <div className={styles.form}>

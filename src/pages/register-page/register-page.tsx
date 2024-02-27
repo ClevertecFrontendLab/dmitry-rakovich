@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { AuthWrapper } from "@components/AuthWrapper"
 import { Loader } from "@components/Loader/Loader"
 import { setData } from "@redux/slices/user-slice"
+import { STATUS } from "@constants/status"
 
 export const RegisterPage: React.FC = () => {
     const { pathname } = useLocation();
@@ -49,13 +50,13 @@ export const RegisterPage: React.FC = () => {
                 email: authData.email || form.getFieldValue('email'),
                 password: authData.password || form.getFieldValue('password')
             })
-            if (response.status === 201) {
+            if (response.status === STATUS.CREATE) {
                 dispatch(push(ROUTES.result.success, {
                     from: ROUTES.auth.registration
                 }));
             }
         } catch (error) {
-            if (error.response.status === 409) {
+            if (error.response.status === STATUS.IS_EXIST) {
                 dispatch(push(ROUTES.result.error.user_exist, {
                     from: ROUTES.auth.registration
                 }));

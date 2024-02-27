@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks";
 import { push } from "redux-first-history";
 import { setData } from "@redux/slices/user-slice";
 import { Loader } from "@components/Loader/Loader";
+import { STATUS } from "@constants/status";
 
 
 export const ChangePassword: React.FC = () => {
@@ -50,7 +51,7 @@ export const ChangePassword: React.FC = () => {
                 password: authData.password || form.getFieldValue('password'),
                 confirmPassword: authData.confirmPassword || form.getFieldValue('confirmPassword')
             })
-            if (response.status === 201) {
+            if (response.status === STATUS.CREATE) {
                 dispatch(push(ROUTES.result.success_change_password, {
                     from: ROUTES.auth.change_password
                 }))

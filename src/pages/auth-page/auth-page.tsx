@@ -14,7 +14,7 @@ import $api from "../../axios"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { setData, signIn } from "@redux/slices/user-slice"
 import { Loader } from "@components/Loader/Loader"
-
+import { STATUS } from "@constants/status"
 
 export const AuthPage: React.FC = () => {
     const { pathname } = useLocation();
@@ -60,7 +60,7 @@ export const AuthPage: React.FC = () => {
                     email: form.getFieldValue('email'),
                     password: form.getFieldValue('password')
                 })
-                if (response.status === 200) {
+                if (response.status === STATUS.OK) {
                     dispatch(signIn({ user: true }))
                     if (remember) {
                         localStorage.setItem('cleverfit-token', JSON.stringify(response.data.accessToken))
@@ -94,9 +94,8 @@ export const AuthPage: React.FC = () => {
                 return
             }
         } catch (error) {
-            console.log('error', error);
 
-            if (error.response.status === 404) {
+            if (error.response.status === STATUS.NOT_FOUND) {
                 if (error.response.data.message === 'Email не найден') {
                     dispatch(push(ROUTES.result.error.check_email_no_exist, {
                         from: ROUTES.auth.main

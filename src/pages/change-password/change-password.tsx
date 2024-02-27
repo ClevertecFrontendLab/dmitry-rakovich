@@ -1,7 +1,6 @@
 import { Button, Form, Input } from "antd";
 import styles from './styles.module.scss';
 import { rules } from "@constants/rules";
-import { regex } from "@constants/regex";
 import { useEffect, useState } from "react";
 import { AuthWrapper } from "@components/AuthWrapper";
 import { ROUTES } from "@constants/routes";
@@ -13,7 +12,6 @@ import { changePassword } from "@redux/actions/user-actions";
 
 
 export const ChangePassword: React.FC = () => {
-    const [isFormValid, setIsFormValid] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
@@ -33,15 +31,6 @@ export const ChangePassword: React.FC = () => {
 
     }, [user])
 
-    const validateForm = () => {
-        const { password, confirmPassword } = form.getFieldsValue(['password', 'confirmPassword'])
-        if (password.match(regex.password) && password === confirmPassword) {
-            setIsFormValid(true)
-        } else {
-            setIsFormValid(false)
-        }
-    }
-
     const sendPassword = async () => {
         const { password, confirmPassword } = form.getFieldsValue(['password', 'confirmPassword'])
         setIsLoading(true)
@@ -56,7 +45,6 @@ export const ChangePassword: React.FC = () => {
                 form={form}
                 layout="vertical"
                 className={styles.form}
-                onValuesChange={validateForm}
                 initialValues={{ email: '', password: '' }}
             >
                 <h1>Восстановление аккаунта</h1>
@@ -71,7 +59,7 @@ export const ChangePassword: React.FC = () => {
                     >
                         <Input.Password
                             data-test-id='change-password'
-                            placeholder='Пароль'
+                            placeholder='Новый пароль'
                             size="large"
                             className={styles.input}
                         />
@@ -111,7 +99,6 @@ export const ChangePassword: React.FC = () => {
                         size="large"
                         onClick={sendPassword}
                         data-test-id='change-submit-button'
-                        disabled={!isFormValid}
                     >
                         Сохранить
                     </Button>

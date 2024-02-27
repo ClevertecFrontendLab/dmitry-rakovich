@@ -19,9 +19,9 @@ import { authDataSelector, userSelector } from "@redux/selectors"
 
 export const AuthPage: React.FC = () => {
     const { pathname } = useLocation();
-    const [disabled, setDisabled] = useState<boolean>(false)
-    const [isFormValid, setIsFormValid] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [disabled, setDisabled] = useState(false)
+    const [isFormValid, setIsFormValid] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
     const user = useAppSelector(userSelector)

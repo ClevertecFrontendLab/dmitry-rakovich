@@ -13,7 +13,7 @@ export const ErrorOther: React.FC = () => {
     const dispatch = useAppDispatch()
     const { user } = useAppSelector(state => state.user)
 
-    const goTo = () => {
+    const navigateTo = () => {
         dispatch(push(ROUTES.auth.registration, {
             from: ROUTES.result.error.other
         }))
@@ -38,7 +38,7 @@ export const ErrorOther: React.FC = () => {
                 </div>
                 <Button
                     type="primary"
-                    onClick={goTo}
+                    onClick={navigateTo}
                     className={styles.button}
                     data-test-id='registration-retry-button'
                 >

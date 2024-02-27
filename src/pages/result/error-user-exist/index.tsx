@@ -13,7 +13,7 @@ export const ErrorUserExist: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
 
     const dispatch = useAppDispatch()
-    const goTo = () => {
+    const navigateTo = () => {
         dispatch(push(ROUTES.auth.registration, {
             from: ROUTES.result.error.user_exist
         }))
@@ -40,7 +40,7 @@ export const ErrorUserExist: React.FC = () => {
                 </div>
                 <Button
                     type="primary"
-                    onClick={goTo}
+                    onClick={navigateTo}
                     className={styles.button}
                     data-test-id='registration-back-button'
                 >

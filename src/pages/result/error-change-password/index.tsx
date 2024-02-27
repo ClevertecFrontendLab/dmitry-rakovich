@@ -13,7 +13,7 @@ export const ErrorChangePassword: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
 
     const dispatch = useAppDispatch()
-    const goTo = () => {
+    const navigateTo = () => {
         dispatch(push(ROUTES.auth.change_password, {
             from: ROUTES.result.error.change_password
         }))
@@ -36,7 +36,7 @@ export const ErrorChangePassword: React.FC = () => {
                 </div>
                 <Button
                     type="primary"
-                    onClick={goTo}
+                    onClick={navigateTo}
                     className={styles.button}
                     data-test-id='change-retry-button'
                 >

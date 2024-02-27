@@ -15,7 +15,7 @@ export const ErrorCheckEmailNoExist: React.FC = () => {
 
     const dispatch = useAppDispatch()
 
-    const goTo = () => {
+    const navigateTo = () => {
         dispatch(push(ROUTES.auth.main))
     }
     useEffect(() => {
@@ -39,7 +39,7 @@ export const ErrorCheckEmailNoExist: React.FC = () => {
                 </div>
                 <Button
                     type="primary"
-                    onClick={goTo}
+                    onClick={navigateTo}
                     className={styles.button}
                     data-test-id='check-retry-button'
                 >

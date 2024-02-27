@@ -14,7 +14,7 @@ export const RegisterSuccess: React.FC = () => {
     const { user } = useAppSelector(state => state.user)
 
     const dispatch = useAppDispatch()
-    const goTo = () => {
+    const navigateTo = () => {
         dispatch(push(ROUTES.auth.main))
     }
 
@@ -38,7 +38,7 @@ export const RegisterSuccess: React.FC = () => {
                 <Button
                     data-test-id='registration-enter-button'
                     type="primary"
-                    onClick={goTo}
+                    onClick={navigateTo}
                     className={styles.button}
                 >
                     {result.success.buttonText}

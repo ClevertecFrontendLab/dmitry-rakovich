@@ -32,7 +32,6 @@ export const user = createSlice({
             state.authData.email = action.payload.email
             state.authData.password = action.payload.password
             state.authData.confirmPassword = action.payload.confirmPassword
-            state.authData.pathname = action.payload.pathname
         }
     }
 });

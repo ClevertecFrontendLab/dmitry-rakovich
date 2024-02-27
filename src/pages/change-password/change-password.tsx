@@ -4,14 +4,12 @@ import { rules } from "@constants/rules";
 import { regex } from "@constants/regex";
 import { useEffect, useState } from "react";
 import { AuthWrapper } from "@components/AuthWrapper";
-import $api from "../../axios";
 import { ROUTES } from "@constants/routes";
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks";
 import { push } from "redux-first-history";
-import { setData } from "@redux/slices/user-slice";
 import { Loader } from "@components/Loader/Loader";
-import { STATUS } from "@constants/status";
-import { authDataSelector, userSelector } from "@redux/selectors";
+import { userSelector } from "@redux/selectors";
+import { changePassword } from "@redux/actions/user-actions";
 
 
 export const ChangePassword: React.FC = () => {
@@ -20,7 +18,6 @@ export const ChangePassword: React.FC = () => {
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
     const user = useAppSelector(userSelector)
-    const authData = useAppSelector(authDataSelector)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
@@ -46,26 +43,9 @@ export const ChangePassword: React.FC = () => {
     }
 
     const sendPassword = async () => {
+        const { password, confirmPassword } = form.getFieldsValue(['password', 'confirmPassword'])
         setIsLoading(true)
-        try {
-            const response = await $api.post(ROUTES.auth.change_password, {
-                password: authData.password || form.getFieldValue('password'),
-                confirmPassword: authData.confirmPassword || form.getFieldValue('confirmPassword')
-            })
-            if (response.status === STATUS.CREATE) {
-                dispatch(push(ROUTES.result.success_change_password, {
-                    from: ROUTES.auth.change_password
-                }))
-            }
-        } catch (error) {
-            dispatch(setData({
-                password: authData.password || form.getFieldValue('password'),
-                confirmPassword: authData.confirmPassword || form.getFieldValue('confirmPassword')
-            }))
-            dispatch(push(ROUTES.result.error.change_password, {
-                from: ROUTES.auth.change_password
-            }))
-        }
+        dispatch(changePassword({ password, confirmPassword }))
         setIsLoading(false)
     }
 

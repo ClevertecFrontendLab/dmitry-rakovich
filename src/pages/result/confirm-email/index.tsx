@@ -5,13 +5,13 @@ import styles from '../styles.module.scss'
 import '../icons.scss'
 import './styles.scss'
 import VerificationInput from "react-verification-input"
-import $api from "../../../axios"
 import { ROUTES } from "@constants/routes"
 import { useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { push } from "redux-first-history"
 import { Loader } from "@components/Loader/Loader"
 import { authDataSelector, userSelector } from "@redux/selectors"
+import { verifyEmail } from "@redux/actions/user-actions"
 
 export const ConfirmEmail: React.FC = () => {
     const [value, setValue] = useState('')
@@ -33,20 +33,9 @@ export const ConfirmEmail: React.FC = () => {
 
     const confirmEmail = async (code: string) => {
         setIsLoading(true)
-        try {
-            const response = await $api.post(ROUTES.auth.confirm_email, {
-                email,
-                code
-            })
-            if (response) {
-                dispatch(push(ROUTES.auth.change_password, {
-                    from: ROUTES.auth.confirm_email
-                }))
-            }
-        } catch (error) {
-            setValue('')
-            setError(true)
-        }
+        dispatch(verifyEmail({
+            code, setError, setValue
+        }))
         setIsLoading(false)
     }
     return (

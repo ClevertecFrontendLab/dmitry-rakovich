@@ -6,16 +6,13 @@ import { useEffect, useState } from "react"
 import { Link, useLocation } from "react-router-dom"
 import logo from '../../assets/logo.svg'
 import styles from '../auth.module.scss'
-import { api } from "@constants/api"
-import $api from "../../axios"
 import { push } from "redux-first-history";
 import { ROUTES } from "@constants/routes"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { AuthWrapper } from "@components/AuthWrapper"
 import { Loader } from "@components/Loader/Loader"
-import { setData } from "@redux/slices/user-slice"
-import { STATUS } from "@constants/status"
-import { authDataSelector, userSelector } from "@redux/selectors"
+import { userSelector } from "@redux/selectors"
+import { register } from "@redux/actions/user-actions"
 
 export const RegisterPage: React.FC = () => {
     const { pathname } = useLocation();
@@ -24,13 +21,12 @@ export const RegisterPage: React.FC = () => {
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
     const user = useAppSelector(userSelector)
-    const authData = useAppSelector(authDataSelector)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
         if (history.state.usr) {
             if (history.state.usr.from === ROUTES.result.error.other)
-                register()
+                registerUser()
         }
 
     }, [user])
@@ -44,39 +40,16 @@ export const RegisterPage: React.FC = () => {
         }
     }
 
-    const register = async () => {
+    const registerUser = async () => {
+        const { email, password } = form.getFieldsValue(['email', 'password'])
         setIsLoading(true)
-        try {
-            const response = await $api.post(api.auth.registration, {
-                email: authData.email || form.getFieldValue('email'),
-                password: authData.password || form.getFieldValue('password')
-            })
-            if (response.status === STATUS.CREATE) {
-                dispatch(push(ROUTES.result.success, {
-                    from: ROUTES.auth.registration
-                }));
-            }
-        } catch (error) {
-            if (error.response.status === STATUS.IS_EXIST) {
-                dispatch(push(ROUTES.result.error.user_exist, {
-                    from: ROUTES.auth.registration
-                }));
-                return
-            }
-            dispatch(setData({
-                email: authData.email || form.getFieldValue('email'),
-                password: authData.password || form.getFieldValue('password')
-            }))
-            dispatch(push(ROUTES.result.error.other, {
-                from: ROUTES.auth.registration
-            }))
-        }
+        dispatch(register({ email, password }))
         setIsLoading(false)
     }
 
     const sendForm = async () => {
         if (isFormValid) {
-            register()
+            registerUser()
         } else {
             form.validateFields()
         }

@@ -7,15 +7,12 @@ import { Link, useLocation } from "react-router-dom"
 import logo from '../../assets/logo.svg'
 import styles from '../auth.module.scss'
 import { AuthWrapper } from "@components/AuthWrapper"
-import { api } from "@constants/api"
 import { ROUTES } from "@constants/routes"
 import { push } from "redux-first-history"
-import $api from "../../axios"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
-import { setData, signIn } from "@redux/slices/user-slice"
 import { Loader } from "@components/Loader/Loader"
-import { STATUS } from "@constants/status"
-import { authDataSelector, userSelector } from "@redux/selectors"
+import { userSelector } from "@redux/selectors"
+import { login, restorePassword } from "@redux/actions/user-actions"
 
 export const AuthPage: React.FC = () => {
     const { pathname } = useLocation();
@@ -25,7 +22,6 @@ export const AuthPage: React.FC = () => {
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
     const user = useAppSelector(userSelector)
-    const authData = useAppSelector(authDataSelector)
 
     useEffect(() => {
         if (user) dispatch(push(ROUTES.main))
@@ -50,27 +46,11 @@ export const AuthPage: React.FC = () => {
     }
 
     const sendForm = async () => {
-        const { remember } = form.getFieldsValue(['remember'])
+        const { email, password, remember } = form.getFieldsValue(['email', 'password', 'remember'])
 
         if (isFormValid) {
             setIsLoading(true)
-            try {
-                const response = await $api.post(api.auth.login, {
-                    email: form.getFieldValue('email'),
-                    password: form.getFieldValue('password')
-                })
-                if (response.status === STATUS.OK) {
-                    dispatch(signIn({ user: true }))
-                    if (remember) {
-                        localStorage.setItem('cleverfit-token', JSON.stringify(response.data.accessToken))
-                    }
-                    dispatch(push(ROUTES.main));
-                }
-            } catch (error) {
-                dispatch(push(ROUTES.result.error.login, {
-                    from: ROUTES.auth.main
-                }));
-            }
+            dispatch(login({ email, password, remember }))
             setIsLoading(false)
         } else {
             form.validateFields()
@@ -78,52 +58,9 @@ export const AuthPage: React.FC = () => {
     };
 
     const sendPassword = async () => {
+        const email = form.getFieldValue('email')
         setIsLoading(true)
-        try {
-            const response = await $api.post(api.auth.check_email, {
-                email: authData.email || form.getFieldValue('email')
-            })
-            if (response) {
-                dispatch(setData({ email: form.getFieldValue('email') }))
-                dispatch(push(ROUTES.auth.confirm_email, {
-                    from: ROUTES.auth.main
-                }))
-                return
-            }
-        } catch (error) {
-
-            if (error.response.status === STATUS.NOT_FOUND) {
-                if (error.response.data.message === 'Email не найден') {
-                    dispatch(push(ROUTES.result.error.check_email_no_exist, {
-                        from: ROUTES.auth.main
-                    }));
-                    return
-                } else {
-                    dispatch(
-                        setData({
-                            email: authData.email || form.getFieldValue('email')
-                        })
-                    )
-                    dispatch(
-                        push(ROUTES.result.error.check_email, {
-                            from: '/auth'
-                        })
-                    )
-                    return
-                }
-            } else {
-                dispatch(
-                    setData({
-                        email: authData.email || form.getFieldValue('email')
-                    })
-                )
-                dispatch(
-                    push(ROUTES.result.error.check_email, {
-                        from: '/auth'
-                    })
-                )
-            }
-        }
+        dispatch(restorePassword(email))
         setIsLoading(false)
     }
 

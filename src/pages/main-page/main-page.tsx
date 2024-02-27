@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import Sider from 'antd/lib/layout/Sider';
 import { Header } from '@components/Header';
@@ -6,9 +6,18 @@ import { NavigationDesktop } from '@components/NavigationDesktop';
 import { Main } from '@components/Main';
 import './main-page.scss';
 import { NavigationMobile } from '@components/NavigationMobile';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { push } from 'redux-first-history';
+import { ROUTES } from '@constants/routes';
 
 export const MainPage: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
+    const user = useAppSelector(state => state.user.user)
+    const dispatch = useAppDispatch()
+
+    useEffect(() => {
+        if (!user) dispatch(push(ROUTES.auth.main))
+    }, [user])
     return (
         <Layout hasSider>
             <Sider className='desktop-sider' collapsible trigger={null} theme='light' collapsed={collapsed} width={208} collapsedWidth={64}>

@@ -1,0 +1,29 @@
+.icon {
+    width: 80px;
+    height: 80px;
+    padding: 5px;
+
+    svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    &.error_login {
+        color: #FAAD14;
+    }
+
+    &.register_success {
+        color: #52C41A;
+    }
+
+    &.warning {
+        color: #FF4D4F;
+    }
+    &.confirm_email {
+        color: #2F54EB;
+    }
+    &.error_check_email {
+        width: 255px;
+        height: 295px;
+    }
+}

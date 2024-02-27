@@ -1,0 +1,35 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    background-color: #fff;
+    border-radius: 2px;
+    padding: 64px 85.5px;
+}
+
+.input_block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .form_item {
+        margin-bottom: 16px;
+        
+    }
+}
+
+.form_item {
+    margin-bottom: 0;
+}
+
+.button {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    &.save {
+        span {
+            color: #fff;
+        }
+    }
+}

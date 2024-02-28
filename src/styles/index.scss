@@ -70,10 +70,52 @@ body {
         clip-path: inset(0 0 0 100px);
         margin-left: -100px;
     }
+
     & .menu_text {
         display: none;
     }
+
     & .menu_item {
         justify-content: center;
+    }
+}
+
+.ant-form-item-explain-success {
+    color: #8c8c8c;
+}
+
+.ant-input-focus {
+    border-color: #597EF7;
+}
+
+.ant-form-item-explain-connected {
+    div {}
+}
+
+.ant-form-item-explain {
+
+    font-size: 12px;
+
+    div {
+        color: #8C8C8C;
+    }
+}
+
+.ant-checkbox-checked>.ant-checkbox-inner {
+    background-color: #2F54EB;
+    border-color: #2F54EB;
+}
+
+.ant-btn {
+    &>span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.ant-form-item-explain-connected {
+    .ant-form-item-explain-error {
+        color: red;
     }
 }

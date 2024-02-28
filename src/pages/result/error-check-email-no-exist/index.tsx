@@ -41,7 +41,7 @@ export const ErrorCheckEmailNoExist: React.FC = () => {
                 <Button
                     type="primary"
                     onClick={navigateTo}
-                    className={styles.button}
+                    className={`${styles.button} $${styles.medium_button}`}
                     data-test-id='check-retry-button'
                 >
                     {result.error_check_email_no_exist.buttonText}

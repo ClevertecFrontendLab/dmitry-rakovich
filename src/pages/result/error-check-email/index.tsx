@@ -11,7 +11,7 @@ import { Button } from "antd"
 import { userSelector } from "@redux/selectors"
 
 export const ErrorCheckEmail: React.FC = () => {
-    const user  = useAppSelector(userSelector)
+    const user = useAppSelector(userSelector)
 
     const dispatch = useAppDispatch()
     const navigateTo = () => {
@@ -40,7 +40,7 @@ export const ErrorCheckEmail: React.FC = () => {
                 <Button
                     type="primary"
                     onClick={navigateTo}
-                    className={styles.button}
+                    className={`${styles.button} ${styles.small_button}`}
                     data-test-id='check-back-button'
                 >
                     {result.error_check_email.buttonText}

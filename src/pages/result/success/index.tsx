@@ -12,7 +12,7 @@ import { userSelector } from "@redux/selectors"
 
 
 export const RegisterSuccess: React.FC = () => {
-    const user  = useAppSelector(userSelector)
+    const user = useAppSelector(userSelector)
 
     const dispatch = useAppDispatch()
     const navigateTo = () => {

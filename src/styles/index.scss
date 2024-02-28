@@ -92,3 +92,8 @@ body {
         color: #8C8C8C;
     }
 }
+
+.ant-checkbox-checked > .ant-checkbox-inner {
+    background-color: #2F54EB;
+    border-color: #2F54EB;
+}

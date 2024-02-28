@@ -56,7 +56,9 @@ export const ConfirmEmail: React.FC = () => {
                         }
                     </h1>
                     <p className={styles.text}>
-                        {`Мы отправили вам на ${email && email} шестизначный код. Введите его в поле ниже.`}
+                        <span>Мы отправили вам на e-mail </span>
+                        <span className='bold'>{email}</span>
+                        <span> шестизначный код. Введите его в поле ниже.</span>
                     </p>
                 </div>
                 <VerificationInput
@@ -65,6 +67,7 @@ export const ConfirmEmail: React.FC = () => {
                     onComplete={(value) => confirmEmail(value)}
                     validChars="0-9"
                     inputProps={{ inputMode: "numeric", 'data-test-id': 'verification-input' }}
+                    placeholder=" "
                     classNames={{
                         container: "container",
                         character: `character ${error ? 'error' : ''}`,
@@ -73,7 +76,7 @@ export const ConfirmEmail: React.FC = () => {
                         characterFilled: "character--filled",
                     }}
                 />
-                <p>Не пришло письмо? Проверьте папку Спам.</p>
+                <p className={styles.text}>Не пришло письмо? Проверьте папку Спам.</p>
             </div>
         </AuthWrapper>
     )

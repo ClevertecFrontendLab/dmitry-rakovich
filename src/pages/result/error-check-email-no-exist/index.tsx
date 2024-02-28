@@ -1,4 +1,4 @@
-import { WarningFilled } from "@ant-design/icons"
+import { CloseCircleFilled } from "@ant-design/icons"
 import { result } from "@constants/resultPageData"
 import { ROUTES } from "@constants/routes"
 import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
@@ -33,7 +33,7 @@ export const ErrorCheckEmailNoExist: React.FC = () => {
     return (
         <AuthWrapper>
             <div className={styles.form}>
-                <WarningFilled className={`icon ${result.error_check_email_no_exist.iconClassName}`} />
+                <CloseCircleFilled className={`icon ${result.error_check_email_no_exist.iconClassName}`} />
                 <div>
                     <h1 className={styles.title}>{result.error_check_email_no_exist.title}</h1>
                     <p className={styles.text}>{result.error_check_email_no_exist.text}</p>

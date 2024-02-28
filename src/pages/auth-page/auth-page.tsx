@@ -108,7 +108,6 @@ export const AuthPage: React.FC = () => {
                         name="password"
                         className={styles.form_item}
                         rules={[rules.password]}
-                        help="Пароль должен содержать как минимум 1 цифру, 1 латинскую строчную и одну заглавную букву."
                     >
                         <Input.Password
                             data-test-id='login-password'

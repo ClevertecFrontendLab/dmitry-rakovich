@@ -52,7 +52,7 @@ export const restorePassword = createAsyncThunk(
                 email: state.user.authData.email || email
             })
             if (response) {
-                dispatch(setData(email))
+                dispatch(setData({ email: state.user.authData.email || email }))
                 dispatch(push(ROUTES.auth.confirm_email, {
                     from: ROUTES.auth.main
                 }))

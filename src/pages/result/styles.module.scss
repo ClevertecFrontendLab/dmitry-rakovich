@@ -32,6 +32,13 @@
     }
 }
 
+.long_text {
+    text-wrap: nowrap;
+    @media screen and (max-width: 480px) {
+        text-wrap: wrap;
+    }
+}
+
 .button {
     width: 100%;
     height: 40px;

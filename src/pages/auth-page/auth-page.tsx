@@ -13,6 +13,8 @@ import { useAppDispatch, useAppSelector } from "@hooks/typed-react-redux-hooks"
 import { Loader } from "@components/Loader/Loader"
 import { userSelector } from "@redux/selectors"
 import { login, restorePassword } from "@redux/actions/user-actions"
+import { BASE_URL } from "@constants/api"
+import { history as reduxHistory } from "@redux/configure-store"
 
 export const AuthPage: React.FC = () => {
     const { pathname } = useLocation();
@@ -72,6 +74,12 @@ export const AuthPage: React.FC = () => {
         } else {
             sendPassword()
         }
+    }
+
+    const handleGoogleAuth = async () => {
+        window.location.href = BASE_URL + ROUTES.auth.google
+
+
     }
 
     return (
@@ -153,6 +161,7 @@ export const AuthPage: React.FC = () => {
                         <Button
                             size="large"
                             className={styles.button}
+                            onClick={handleGoogleAuth}
                         >
                             <GooglePlusOutlined />
                             <span>Войти через Google</span>

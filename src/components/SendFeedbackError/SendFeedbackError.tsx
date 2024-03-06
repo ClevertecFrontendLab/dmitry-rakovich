@@ -15,7 +15,7 @@ export const SendFeedbackError = ({ setIsError, setIsOpen }: Props) => {
     };
 
     return (
-        <Modal centered open footer='' closable={false}>
+        <Modal centered open footer='' closable={false} className={styles.modal}>
             <div className={styles.form}>
                 <CloseCircleFilled className={styles.icon} />
                 <div>

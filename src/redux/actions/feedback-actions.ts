@@ -36,9 +36,12 @@ export const sendFeedback = createAsyncThunk(
             const response = await $api.post(api.feedback, {
                 rating, message
             })
-            setIsSuccess(true)
-            dispatch(getAllFeedbacks(response.data))
+            if (response) {
+                setIsError(false)
+                setIsSuccess(true)
+            }
         } catch (error) {
+            setIsSuccess(false)
             setIsError(true)
             return thunkAPI.rejectWithValue(error)
         }

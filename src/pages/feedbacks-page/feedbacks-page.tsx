@@ -22,8 +22,9 @@ export const FeedbacksPage: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isShow, setIsShow] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
-    const [isError, setIsError] = useState(false)
+    const [isError, setIsError] = useState(true)
     const [feedbackError, setFeedbackError] = useState(false)
+    const [disabled, setDisabled] = useState(true)
     const [form] = Form.useForm();
     const dispatch = useAppDispatch()
     const user = useAppSelector(userSelector)
@@ -78,13 +79,13 @@ export const FeedbacksPage: React.FC = () => {
                             message: 'messages.required',
                         }]}
                     >
-                        <Rate character={<StarTwoTone twoToneColor='#FAAD14' />} />
+                        <Rate onChange={() => setDisabled(false)} character={<StarTwoTone twoToneColor='#FAAD14' />} />
                     </Form.Item>
                     <Form.Item className={styles.message_item} name="message" >
                         <Input.TextArea placeholder="Расскажите, почему Вам понравилось наше приложение"></Input.TextArea>
                     </Form.Item>
                     <Form.Item className={styles.button_item}>
-                        <Button data-test-id='new-review-submit-button' onClick={postFeedback} type="primary" className={styles.button}>Опубликовать</Button>
+                        <Button disabled={disabled} data-test-id='new-review-submit-button' onClick={postFeedback} type="primary" className={styles.button}>Опубликовать</Button>
                     </Form.Item>
                 </Form>
             </Modal>

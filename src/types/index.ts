@@ -12,3 +12,12 @@ export interface IAuth {
     email: string,
     password: string,
 }
+
+export interface IFeedback {
+    id: string,
+    fullName: null,
+    imageSrc: null,
+    message: null,
+    rating: number,
+    createdAt: string
+}

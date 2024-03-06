@@ -1,0 +1,115 @@
+@import '../../styles/variables';
+.form {
+    :global {
+        .ant-form-item {
+            margin-bottom: 0;
+        }
+        .ant-rate-star-full {
+            svg {
+                path {
+                    fill: #FAAD14;
+                }
+            }
+        }
+    }
+    .form_item {
+        border-bottom: 1px solid $neutral-gray-4;
+    }
+    .title {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 16px 0;
+        padding: 0 16px;
+    }
+    .message_item{
+        padding: 16px 24px 24px;
+        border-bottom: 1px solid $neutral-gray-4;
+    }
+    .rate_item {
+        padding: 24px 24px 0;
+    }
+    .button_item {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px 24px;
+    }
+    .button {
+        height: 40px;
+        background-color: $primary-light-6;
+        border-color: $primary-light-6;
+        span {
+            color: $neutral-gray-1;
+        }
+    }
+}
+
+.container {
+    position: relative;
+    height: 100vh;
+}
+
+
+
+.rating {
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+.message {
+    margin-bottom: 24px;
+}
+.feedback_list {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    height: calc((128px * 4) + (20px * 4) + 20px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+    &.open {
+        overflow: auto;
+        height: 80%;
+    }
+}
+
+.footer {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 20%;
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+    gap: 10px;
+    @media screen and (max-width:480px) {
+        flex-direction: column;
+        align-items: center;
+        > div, .button {
+            width: 100%;
+        }
+    }
+}
+
+.button {
+    height: 40px;
+    background-color: $primary-light-6;
+    border-color: $primary-light-6;
+    &:hover, &:active, &:focus {
+        background-color: $primary-dark-6;
+        border-color: $primary-dark-6;
+    }
+    span {
+        color: $neutral-gray-1;
+    }
+}
+
+.button_link {
+    height: 40px;
+    span {
+        color: $primary-light-6;
+    }
+}

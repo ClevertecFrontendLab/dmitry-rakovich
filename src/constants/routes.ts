@@ -19,5 +19,6 @@ export const ROUTES = {
             change_password: '/result/error-change-password',
             other: '/result/error',
         }
-    }
+    },
+    feedbacks: '/feedbacks'
 }

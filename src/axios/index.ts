@@ -12,7 +12,12 @@ const $api = axios.create({
 
 
 $api.interceptors.request.use((config) => {
-    config.headers.Authorization = `Bearer ${localStorage.getItem('cleverfit-token')}`;
+    if (localStorage.getItem('cleverfit-token')) {
+        config.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('cleverfit-token')).accessToken}`;
+    }
+    if (sessionStorage.getItem('cleverfit-token')) {
+        config.headers.Authorization = `Bearer ${JSON.parse(sessionStorage.getItem('cleverfit-token')).accessToken}`;
+    }
     return config;
 });
 

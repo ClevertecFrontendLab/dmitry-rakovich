@@ -1,0 +1,79 @@
+@import '../../styles/variables';
+
+.feedback {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background-color: $neutral-gray-1;
+    height: max-content;
+    @media screen and (max-width:480px) {
+        flex-direction: column;
+
+    }
+}
+
+.user {
+    width: 174px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 100%;
+        background-color: #F5F5F5;
+    }
+    @media screen and (max-width:480px) {
+        flex-direction: row;
+    }
+}
+
+
+
+.full_name {
+    text-align: center;
+    width: min-content;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+}
+
+.top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.rate {
+    svg {
+        fill: #FAAD14;
+    }
+}
+
+.date {
+    font-size: 12px;
+    color: $neutral-gray-6;
+}
+
+.message {
+    color: $character-light-secondary;
+}
+
+:global {
+    .ant-rate-star-full {
+        svg {
+            path {
+                fill: #FAAD14;
+            }
+        }
+    }
+}

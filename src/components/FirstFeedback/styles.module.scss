@@ -1,0 +1,55 @@
+@import '../../styles/variables';
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 24px;
+}
+
+.first_feedback {
+    width: 100%;
+    background-color: $neutral-gray-1;
+    padding: 75.5px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    margin-bottom: 20px;
+}
+
+.title {
+    color: $primary-light-9;
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 31.2px;
+    text-align: center;
+}
+
+.text {
+    width: 520px;
+    font-size: 14px;
+    line-height: 18.2px;
+    color: $neutral-gray-7;
+    text-align: center;
+    @media screen and (max-width: 480px) {
+        width: auto;
+        text-wrap: balance;
+    }
+}
+
+.button {
+    background-color: $primary-light-6;
+    border-color: $primary-light-6;
+    height: 40px;
+    font-size: 14px;
+    line-height: 18.2px;
+    span {
+        color: $neutral-gray-1;
+    }
+    @media screen and (max-width: 480px) {
+        width: 100%;
+    }
+}

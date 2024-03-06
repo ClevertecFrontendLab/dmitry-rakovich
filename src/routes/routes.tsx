@@ -1,6 +1,8 @@
+import { RootLayout } from "@components/Layout"
 import { ROUTES } from "@constants/routes"
 import { AuthPage } from "@pages/auth-page"
 import { ChangePassword } from "@pages/change-password"
+import { FeedbacksPage } from "@pages/feedbacks-page"
 import { MainPage } from "@pages/main-page"
 import { RegisterPage } from "@pages/register-page"
 import { ConfirmEmail } from "@pages/result/confirm-email"
@@ -17,8 +19,11 @@ import { Navigate, Route, Routes } from "react-router-dom"
 export const AppRoutes = () => {
     return (
         <Routes>
-            <Route path={'/'} element={<Navigate to={ROUTES.main} />} />
-            <Route path={ROUTES.main} element={<MainPage />} />
+            <Route path={'/'} element={<RootLayout />}>
+                <Route path={'/'} element={<Navigate to={ROUTES.main} />} />
+                <Route path={ROUTES.main} element={<MainPage />} />
+                <Route path={ROUTES.feedbacks} element={<FeedbacksPage />} />
+            </Route>
             <Route path={ROUTES.auth.main} element={<AuthPage />} />
             <Route path={ROUTES.auth.registration} element={<RegisterPage />} />
             <Route path={ROUTES.auth.change_password} element={<ChangePassword />} />

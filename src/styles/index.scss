@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import './variables';
 
 *html,
@@ -62,6 +63,7 @@ body {
     left: 0;
     top: 0;
     bottom: 0;
+    z-index: 1;
 }
 
 .ant-layout-sider-collapsed {
@@ -118,4 +120,15 @@ body {
     .ant-form-item-explain-error {
         color: red;
     }
+}
+
+.main {
+    background-image: url('../assets/Main\ page_bg.png');
+    background-position: center;
+    background-size: cover;
+}
+
+.ant-modal-mask {
+    background-color: rgba(121, 156, 212, 0.5);
+    backdrop-filter: blur(4px);
 }

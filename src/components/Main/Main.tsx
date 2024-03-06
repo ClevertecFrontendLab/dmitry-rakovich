@@ -4,6 +4,7 @@ import { CardWithIcon } from '@components/CardWithIcon'
 import styles from './styles.module.scss'
 import { Calendar, Profile } from "../../assets/icons"
 import { CardsBottom } from "@components/CardsBottom/CardsBottom"
+import { Header } from "@components/Header"
 
 const texts = {
 
@@ -27,15 +28,18 @@ const texts = {
 
 export const Main: React.FC = () => {
     return (
-        <div className={styles.main}>
-            <Card text={texts.description} color='#061178' marginBottom='24px' />
-            <Card text={texts.advertisement} color='' fontSize='20px' fontWeight='500' marginBottom='16px' />
-            <div className={styles.cards}>
-                <CardWithIcon title='Расписать тренировки' label='Тренировки' icon={<HeartFilled />} />
-                <CardWithIcon title='Назначить календарь' label='Календарь' icon={<Calendar />} />
-                <CardWithIcon title='Заполнить профиль' label='Профиль' icon={<Profile />} />
+        <>
+            <Header />
+            <div className={styles.main}>
+                <Card text={texts.description} color='#061178' marginBottom='24px' />
+                <Card text={texts.advertisement} color='' fontSize='20px' fontWeight='500' marginBottom='16px' />
+                <div className={styles.cards}>
+                    <CardWithIcon title='Расписать тренировки' label='Тренировки' icon={<HeartFilled />} />
+                    <CardWithIcon title='Назначить календарь' label='Календарь' icon={<Calendar />} />
+                    <CardWithIcon title='Заполнить профиль' label='Профиль' icon={<Profile />} />
+                </div>
+                <CardsBottom />
             </div>
-            <CardsBottom />
-        </div>
+        </>
     )
 }

@@ -58,6 +58,22 @@ export const result = {
         title: 'Введите код для восстановления аккаунта',
         text: 'Мы отправили вам на шестизначный код. Введите его в поле ниже',
         buttonText: '',
-    }
-
+    },
+    error_send_feedback: {
+        iconClassName: 'warning',
+        title: 'Данные не сохранились',
+        text: 'Что-то пошло не так. Попробуйте ещё раз.',
+    },
+    success_send_feedback: {
+        iconClassName: 'warning',
+        title: 'Отзыв успешно опубликован',
+        text: '',
+        buttonText: 'Отлично',
+    },
+    error_get_feedback: {
+        iconClassName: '',
+        title: 'Что-то пошло не так',
+        text: 'Произошла ошибка, попробуйте ещё раз.',
+        buttonText: 'Назад',
+    },
 }

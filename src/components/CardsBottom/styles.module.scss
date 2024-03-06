@@ -20,8 +20,10 @@
     }
 }
 
-.link {
-    color: $primary-light-6;
+.button {
+    span {
+        color: $primary-light-6;
+    }
 }
 
 .hint {

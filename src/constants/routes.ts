@@ -7,6 +7,7 @@ export const ROUTES = {
         check_email: '/auth/check-email',
         confirm_email: '/auth/confirm-email',
         change_password: '/auth/change-password',
+        google: '/auth/google'
     },
     result: {
         success: '/result/success',
@@ -19,5 +20,6 @@ export const ROUTES = {
             change_password: '/result/error-change-password',
             other: '/result/error',
         }
-    }
+    },
+    feedbacks: '/feedbacks'
 }

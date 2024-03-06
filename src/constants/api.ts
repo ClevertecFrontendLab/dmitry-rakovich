@@ -11,11 +11,12 @@ const URLs = {
 
 export const api = {
     auth: {
-        google: `${BASE_URL}/${URLs.auth_google}`,
-        login: `${BASE_URL}/${URLs.auth_login}`,
-        registration: `${BASE_URL}/${URLs.auth_registration}`,
-        check_email: `${BASE_URL}/${URLs.auth_check_email}`,
-        confirm_email: `${BASE_URL}/${URLs.auth_confirm_email}`,
-        change_password: `${BASE_URL}/${URLs.auth_change_password}`,
+        google: `${BASE_URL}${URLs.auth_google}`,
+        login: `${BASE_URL}${URLs.auth_login}`,
+        registration: `${BASE_URL}${URLs.auth_registration}`,
+        check_email: `${BASE_URL}${URLs.auth_check_email}`,
+        confirm_email: `${BASE_URL}${URLs.auth_confirm_email}`,
+        change_password: `${BASE_URL}${URLs.auth_change_password}`,
     },
+    feedback: '/feedback'
 }

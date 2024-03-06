@@ -35,7 +35,7 @@ export const ErrorCheckEmail: React.FC = () => {
                 <ErrorCheckEmailIcon className={`icon ${result.error_check_email.iconClassName}`} />
                 <div>
                     <h1 className={styles.title}>{result.error_check_email.title}</h1>
-                    <p className={styles.text}>{result.error_check_email.text}</p>
+                    <p className={`${styles.text} ${styles.long_text}`}>{result.error_check_email.text}</p>
                 </div>
                 <Button
                     type="primary"

@@ -12,7 +12,7 @@ import { userSelector } from "@redux/selectors";
 
 export const ErrorOther: React.FC = () => {
     const dispatch = useAppDispatch()
-    const user  = useAppSelector(userSelector)
+    const user = useAppSelector(userSelector)
 
     const navigateTo = () => {
         dispatch(push(ROUTES.auth.registration, {

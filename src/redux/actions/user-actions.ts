@@ -30,7 +30,9 @@ export const login = createAsyncThunk(
             if (response.status === STATUS.OK) {
                 dispatch(signIn({ user: true }))
                 if (remember) {
-                    localStorage.setItem('cleverfit-token', JSON.stringify(response.data.accessToken))
+                    localStorage.setItem('cleverfit-token', JSON.stringify(response.data))
+                } else {
+                    sessionStorage.setItem('cleverfit-token', JSON.stringify(response.data))
                 }
                 dispatch(push(ROUTES.main));
             }

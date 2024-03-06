@@ -22,7 +22,7 @@ export const FeedbacksPage: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false)
     const [isShow, setIsShow] = useState(false)
     const [isSuccess, setIsSuccess] = useState(false)
-    const [isError, setIsError] = useState(true)
+    const [isError, setIsError] = useState(false)
     const [feedbackError, setFeedbackError] = useState(false)
     const [disabled, setDisabled] = useState(true)
     const [form] = Form.useForm();
